@@ -1,16 +1,14 @@
-using JobScheduler.BackgroundServices.Configurations;
-using Microsoft.Extensions.Options;
-
 namespace JobScheduler.BackgroundServices.Messaging;
 
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client;
 using Microsoft.Extensions.Hosting;
 using System.Text;
+using Configurations;
+using Microsoft.Extensions.Options;
 
 public abstract class RabbitMqConsumer : BackgroundService
 {
-    private readonly IConnection _connection;
     private readonly IModel _channel;
     private readonly RabbitMqSettings _settings;
 
@@ -18,9 +16,8 @@ public abstract class RabbitMqConsumer : BackgroundService
         IOptions<RabbitMqSettings> settings)
     {
         _settings = settings.Value;
-        _connection = connection;
 
-        _channel = _connection.CreateModel();
+        _channel = connection.CreateModel();
         _channel.QueueDeclare(queue: _settings.QueueName, durable: true, exclusive: false, autoDelete: false);
     }
 
