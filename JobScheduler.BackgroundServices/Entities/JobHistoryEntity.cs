@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using JobScheduler.BackgroundServices.Enums;
+using Microsoft.AspNetCore.Identity;
 
 namespace JobScheduler.BackgroundServices.Entities;
 
@@ -24,5 +25,5 @@ public class JobHistoryEntity : Entity
 
     public JobEntity Job { get; set; }
 
-    public UserEntity User { get; set; }
+    public IdentityUser User { get; set; }
 }
